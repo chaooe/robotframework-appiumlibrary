@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from appium.webdriver.common.touch_action import TouchAction
+from appium.webdriver.common.multi_action import MultiAction
 
 from AppiumLibrary.locators import ElementFinder
 from .keywordgroup import KeywordGroup
@@ -81,6 +82,22 @@ class _TouchKeywords(KeywordGroup):
             self.swipe(x_start, y_start, x_end, y_end, duration)
         else:
             self.swipe(x_start, y_start, x_offset, y_offset, duration)
+            
+    def swipe_multi_touch(self):
+        """
+
+        """
+        driver = self._current_application()
+        at1 = TouchAction(driver)
+        at1.press(x=500,y=500).wait(1000).move_to(x=500,y=200).release()
+        at2 = TouchAction(driver)
+        at2.press(x=400,y=500).wait(1000).move_to(x=400,y=200).release()
+        at3 = TouchAction(driver)
+        at3.press(x=300,y=500).wait(1000).move_to(x=300,y=200).release()
+        mt = MultiAction(driver)
+        self._info("Swipe with 3 fingers from [500,500] to [500,200] ")
+        mt.add(at1, at2, at3)
+        mt.perform()
 
     def scroll(self, start_locator, end_locator):
         """
